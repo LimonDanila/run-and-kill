@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: fd1f5c6e91751614b9d6664e7c936a66
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5285828600118094058
+    second: h-attack_0
+  - first:
+      213: -2672603261756690940
+    second: h-attack_1
+  - first:
+      213: 269009358363037885
+    second: h-attack_2
+  - first:
+      213: 5420036680294347955
+    second: h-attack_3
+  - first:
+      213: -4288858051964409474
+    second: h-attack_4
+  - first:
+      213: -448469101808457089
+    second: h-attack_5
+  - first:
+      213: -5257513288638667082
+    second: h-attack_6
+  - first:
+      213: 2899258856995994226
+    second: h-attack_7
+  - first:
+      213: -6734911678660481646
+    second: h-attack_8
+  - first:
+      213: -1243988644061629917
+    second: h-attack_9
+  - first:
+      213: -350554725588571682
+    second: h-attack_10
+  - first:
+      213: 4824710265564974671
+    second: h-attack_11
+  - first:
+      213: -3086449346422617689
+    second: h-attack_12
+  - first:
+      213: -3507885637060447352
+    second: h-attack_13
+  - first:
+      213: -8031227362667937818
+    second: h-attack_14
+  - first:
+      213: 2354874614150214344
+    second: h-attack_15
+  - first:
+      213: -7482877207316880164
+    second: h-attack_16
+  - first:
+      213: 5683118463497264621
+    second: h-attack_17
+  - first:
+      213: 2020372567420944408
+    second: h-attack_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: h-attack_0
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 431
+        width: 68
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae8a3a53b190b5940800000000000000
+      internalID: 5285828600118094058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_1
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 431
+        width: 77
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40e21755e7109ead0800000000000000
+      internalID: -2672603261756690940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_2
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 431
+        width: 203
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db01c7e0696bbb300800000000000000
+      internalID: 269009358363037885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_3
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 431
+        width: 116
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b43886e4a6d73b40800000000000000
+      internalID: 5420036680294347955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_4
+      rect:
+        serializedVersion: 2
+        x: 1016
+        y: 476
+        width: 23
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e796698335aea74c0800000000000000
+      internalID: -4288858051964409474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_5
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 437
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7ae7fd5ab7b6c9f0800000000000000
+      internalID: -448469101808457089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_6
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 239
+        width: 143
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b6ebccf48f8907b0800000000000000
+      internalID: -5257513288638667082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_7
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 239
+        width: 194
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27ab62bc19c3c3820800000000000000
+      internalID: 2899258856995994226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_8
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 299
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29defc7e289c882a0800000000000000
+      internalID: -6734911678660481646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_9
+      rect:
+        serializedVersion: 2
+        x: 881
+        y: 239
+        width: 119
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 322361e4be67cbee0800000000000000
+      internalID: -1243988644061629917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_10
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 305
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed965fa9554922bf0800000000000000
+      internalID: -350554725588571682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_11
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 278
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4e4e239c60d4f240800000000000000
+      internalID: 4824710265564974671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_12
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 239
+        width: 107
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a94e311caaba25d0800000000000000
+      internalID: -3086449346422617689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_13
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 242
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8833152499c715fc0800000000000000
+      internalID: -3507885637060447352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_14
+      rect:
+        serializedVersion: 2
+        x: 779
+        y: 239
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6efb7c1d3495b8090800000000000000
+      internalID: -8031227362667937818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_15
+      rect:
+        serializedVersion: 2
+        x: 1076
+        y: 239
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c232032cf13ea020800000000000000
+      internalID: 2354874614150214344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_16
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 47
+        width: 143
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd4a20073da772890800000000000000
+      internalID: -7482877207316880164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_17
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 47
+        width: 53
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dedd731d12e7ede40800000000000000
+      internalID: 5683118463497264621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-attack_18
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 47
+        width: 68
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 810c11b452ec90c10800000000000000
+      internalID: 2020372567420944408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      h-attack_0: 5285828600118094058
+      h-attack_1: -2672603261756690940
+      h-attack_10: -350554725588571682
+      h-attack_11: 4824710265564974671
+      h-attack_12: -3086449346422617689
+      h-attack_13: -3507885637060447352
+      h-attack_14: -8031227362667937818
+      h-attack_15: 2354874614150214344
+      h-attack_16: -7482877207316880164
+      h-attack_17: 5683118463497264621
+      h-attack_18: 2020372567420944408
+      h-attack_2: 269009358363037885
+      h-attack_3: 5420036680294347955
+      h-attack_4: -4288858051964409474
+      h-attack_5: -448469101808457089
+      h-attack_6: -5257513288638667082
+      h-attack_7: 2899258856995994226
+      h-attack_8: -6734911678660481646
+      h-attack_9: -1243988644061629917
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

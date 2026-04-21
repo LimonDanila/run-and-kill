@@ -1,0 +1,507 @@
+fileFormatVersion: 2
+guid: 961c86e0a5febbb4fb302f75ec8d241c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5380667772218278149
+    second: h-Hurt_0
+  - first:
+      213: 5058927005159983737
+    second: h-Hurt_1
+  - first:
+      213: 3501590889674563470
+    second: h-Hurt_2
+  - first:
+      213: -5209251927017855471
+    second: h-Hurt_3
+  - first:
+      213: -7309694968184034287
+    second: h-Hurt_4
+  - first:
+      213: 1988596757309310779
+    second: h-Hurt_5
+  - first:
+      213: 9184507136525965299
+    second: h-Hurt_6
+  - first:
+      213: 6631601409507309422
+    second: h-Hurt_7
+  - first:
+      213: -3965816569070930900
+    second: h-Hurt_8
+  - first:
+      213: -2229102996322723025
+    second: h-Hurt_9
+  - first:
+      213: -3414461230082002846
+    second: h-Hurt_10
+  - first:
+      213: -5332237414162416355
+    second: h-Hurt_11
+  - first:
+      213: 5247899538808802206
+    second: h-Hurt_12
+  - first:
+      213: -6892384211192727247
+    second: h-Hurt_13
+  - first:
+      213: 6417469304508343735
+    second: h-Hurt_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: h-Hurt_0
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 239
+        width: 68
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5018671b4d8fbaa40800000000000000
+      internalID: 5380667772218278149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_1
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 290
+        width: 20
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97a013fce4be43640800000000000000
+      internalID: 5058927005159983737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_2
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 272
+        width: 26
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8fdbc7ac56289030800000000000000
+      internalID: 3501590889674563470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_3
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 239
+        width: 65
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 116e490e8f405b7b0800000000000000
+      internalID: -5209251927017855471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_4
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 293
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11c2ee4a72fbe8a90800000000000000
+      internalID: -7309694968184034287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_5
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 284
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b374ae8f63ae89b10800000000000000
+      internalID: 1988596757309310779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_6
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 239
+        width: 71
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f79bad349ce57f70800000000000000
+      internalID: 9184507136525965299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_7
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 299
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e67b9a1a85e280c50800000000000000
+      internalID: 6631601409507309422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_8
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 275
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c243b2c97d696f8c0800000000000000
+      internalID: -3965816569070930900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_9
+      rect:
+        serializedVersion: 2
+        x: 734
+        y: 290
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2bdc6892a2a011e0800000000000000
+      internalID: -2229102996322723025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_10
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 272
+        width: 20
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2607e911a956d90d0800000000000000
+      internalID: -3414461230082002846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_11
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 260
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1d3dceb2561006b0800000000000000
+      internalID: -5332237414162416355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_12
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 47
+        width: 101
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9b82a373d844d840800000000000000
+      internalID: 5247899538808802206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_13
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 47
+        width: 107
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 139b85cc3155950a0800000000000000
+      internalID: -6892384211192727247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: h-Hurt_14
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 47
+        width: 68
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b5613cc45e6f0950800000000000000
+      internalID: 6417469304508343735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      h-Hurt_0: 5380667772218278149
+      h-Hurt_1: 5058927005159983737
+      h-Hurt_10: -3414461230082002846
+      h-Hurt_11: -5332237414162416355
+      h-Hurt_12: 5247899538808802206
+      h-Hurt_13: -6892384211192727247
+      h-Hurt_14: 6417469304508343735
+      h-Hurt_2: 3501590889674563470
+      h-Hurt_3: -5209251927017855471
+      h-Hurt_4: -7309694968184034287
+      h-Hurt_5: 1988596757309310779
+      h-Hurt_6: 9184507136525965299
+      h-Hurt_7: 6631601409507309422
+      h-Hurt_8: -3965816569070930900
+      h-Hurt_9: -2229102996322723025
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
