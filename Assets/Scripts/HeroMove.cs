@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HeroMovementSimple : MonoBehaviour
+public class HeroMove : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -25,8 +25,17 @@ public class HeroMovementSimple : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
+    [Header("Hit Settings")]
+    public float hitKnockbackForce = 5f;
+    public float hitStunDuration = 0.25f;
+    public float invincibilityDuration = 1f;
+
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    public SpriteRenderer Sprite
+    {
+        get { return sprite; }
+    }
     private Animator anim;
     private float horizontalInput;
     private bool isGrounded;
@@ -42,6 +51,17 @@ public class HeroMovementSimple : MonoBehaviour
     private bool wallOnLeft;
     private bool wallOnRight;
 
+    private bool isStunned = false;
+    private float stunTimer = 0f;
+    private bool isInvincible = false;
+    private float invincibilityTimer = 0f;
+
+    private bool isBlockingRotation = false;
+    private float lastDirection = 1f;
+
+    // НОВАЯ ПЕРЕМЕННАЯ ДЛЯ БЛОКИРОВКИ ПЕРЕХОДОВ
+    public bool isTakingDamage = false;  // Public чтобы можно было менять из другого скрипта
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -52,7 +72,52 @@ public class HeroMovementSimple : MonoBehaviour
 
     void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        // ОБРАБОТКА ЗАЖАТОГО SHIFT
+        isBlockingRotation = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+        // Обновление таймеров
+        if (isStunned)
+        {
+            stunTimer -= Time.deltaTime;
+            if (stunTimer <= 0f)
+            {
+                isStunned = false;
+                Debug.Log("Стан закончился");
+            }
+        }
+
+        if (isInvincible)
+        {
+            invincibilityTimer -= Time.deltaTime;
+            if (invincibilityTimer <= 0f)
+            {
+                isInvincible = false;
+                if (sprite != null)
+                    sprite.color = Color.white;
+            }
+            else
+            {
+                float alpha = Mathf.PingPong(Time.time * 15f, 1f);
+                if (sprite != null)
+                    sprite.color = new Color(1f, 1f, 1f, alpha);
+            }
+        }
+
+        // Не обрабатываем ввод если оглушён ИЛИ получает урон
+        if (!isStunned && !isTakingDamage)
+        {
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+
+            if (!isBlockingRotation && horizontalInput != 0)
+            {
+                lastDirection = horizontalInput > 0 ? 1f : -1f;
+            }
+        }
+        else
+        {
+            horizontalInput = 0;
+        }
+
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
 
         CheckWalls();
@@ -80,6 +145,7 @@ public class HeroMovementSimple : MonoBehaviour
             }
         }
 
+        // Параметры для аниматора
         anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
         anim.SetBool("isGrounded", isGrounded);
         anim.SetFloat("verticalSpeed", rb.linearVelocity.y);
@@ -87,7 +153,10 @@ public class HeroMovementSimple : MonoBehaviour
         anim.SetBool("isJumping", isJumping);
         anim.SetBool("justLanded", justLanded);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        // НОВЫЙ ПАРАМЕТР: блокировка переходов при получении урона
+        anim.SetBool("isTakingDamage", isTakingDamage);
+
+        if (Input.GetButtonDown("Jump") && isGrounded && !isStunned && !isTakingDamage)
         {
             isJumping = true;
             jumpHoldTimer = 0f;
@@ -96,7 +165,7 @@ public class HeroMovementSimple : MonoBehaviour
             anim.SetBool("isJumping", true);
         }
 
-        if (Input.GetButton("Jump") && isJumping && jumpHoldTimer < maxHoldTime)
+        if (Input.GetButton("Jump") && isJumping && jumpHoldTimer < maxHoldTime && !isStunned && !isTakingDamage)
         {
             jumpHoldTimer += Time.deltaTime;
 
@@ -123,13 +192,88 @@ public class HeroMovementSimple : MonoBehaviour
             anim.SetBool("isJumping", false);
         }
 
+        // Поворот спрайта (только если не в стане, не получаем урон и не блокируем поворот)
+        if (sprite != null && !isStunned && !isTakingDamage)
+        {
+            if (isBlockingRotation)
+            {
+                // Не поворачиваем
+            }
+            else
+            {
+                if (horizontalInput > 0)
+                    sprite.flipX = false;
+                else if (horizontalInput < 0)
+                    sprite.flipX = true;
+            }
+        }
+    }
+
+    public void TakeHit(int damage, float attackerX)
+    {
+        if (isInvincible)
+        {
+            Debug.Log("Урон проигнорирован (неуязвимость)");
+            return;
+        }
+
+        if (isStunned) return;
+
+        Debug.Log($"Герой получил урон: {damage}");
+
+        isInvincible = true;
+        invincibilityTimer = invincibilityDuration;
+
+        // Включаем флаг получения урона (блокирует переходы в Idle/Run)
+        isTakingDamage = true;
+
+        // Запускаем анимацию получения урона
+        anim.SetTrigger("Hit");
+
+        isStunned = true;
+        stunTimer = hitStunDuration;
+
+        float knockbackDirection = (transform.position.x - attackerX) > 0 ? 1f : -1f;
+        rb.linearVelocity = new Vector2(knockbackDirection * hitKnockbackForce, 3f);
+
+        isJumping = false;
+        anim.SetBool("isJumping", false);
+    }
+
+    // НОВЫЙ МЕТОД: Вызывается из Animation Event в конце анимации hero_hit
+    public void OnDamageAnimationEnd()
+    {
+        Debug.Log("Анимация получения урона закончилась");
+        isTakingDamage = false;
+    }
+
+    public float GetFacingDirection()
+    {
         if (sprite != null)
         {
-            if (horizontalInput > 0)
-                sprite.flipX = false;
-            else if (horizontalInput < 0)
-                sprite.flipX = true;
+            return sprite.flipX ? -1f : 1f;
         }
+        return 1f;
+    }
+
+    public bool IsBlockingRotation
+    {
+        get { return isBlockingRotation; }
+    }
+
+    public bool IsInvincible
+    {
+        get { return isInvincible; }
+    }
+
+    public bool IsStunned
+    {
+        get { return isStunned; }
+    }
+
+    public bool IsGrounded
+    {
+        get { return isGrounded; }
     }
 
     void CheckWalls()
@@ -169,9 +313,10 @@ public class HeroMovementSimple : MonoBehaviour
 
     void FixedUpdate()
     {
+        // НЕ ДВИГАЕМСЯ ЕСЛИ В СТАНЕ (но можем отлететь от удара)
         float horizontalMovement = horizontalInput * moveSpeed;
 
-        if (!isGrounded)
+        if (!isGrounded && !isStunned)
         {
             if (horizontalInput < 0 && wallOnLeft)
             {
