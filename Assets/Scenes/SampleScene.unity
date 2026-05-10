@@ -795,10 +795,11 @@ GameObject:
   - component: {fileID: 862087727}
   - component: {fileID: 862087730}
   - component: {fileID: 862087731}
+  - component: {fileID: 862087735}
   - component: {fileID: 862087733}
   m_Layer: 0
   m_Name: Hero
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -840,7 +841,7 @@ BoxCollider2D:
   m_Offset: {x: 0.0089069605, y: -0.004142165}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.65, y: 0.5}
     oldSize: {x: 1.0625, y: 1.203125}
     newSize: {x: 1.0625, y: 1.203125}
     adaptiveTilingThreshold: 0.5
@@ -918,6 +919,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  hitKnockbackForce: 5
+  hitStunDuration: 0.25
+  invincibilityDuration: 0.25
+  isTakingDamage: 0
 --- !u!95 &862087733
 Animator:
   serializedVersion: 7
@@ -940,6 +945,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &862087735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862087726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6e940c7f47a3ed4a96d24fb91c5dcd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeroCombat
+  attackRange: 1
+  lightAttackCooldown: 0.1
+  heavyAttackCooldown: 0.5
+  lightAttackDamage: 10
+  heavyAttackDamage: 25
+  hitEffectPrefab: {fileID: 0}
 --- !u!1 &1175193590
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,7 +1985,7 @@ GameObject:
   - component: {fileID: 1482906800}
   m_Layer: 0
   m_Name: Skeleton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2094,6 +2117,14 @@ MonoBehaviour:
   moveSpeed: 2
   patrolDistance: 3
   detectionRange: 2.3
+  attackRange: 1.4
+  attackCooldown: 1
+  damage: 5
+  maxHealth: 30
+  knockbackForce: 5
+  invincibilityDuration: 0.25
+  contactDamageCooldown: 1
+  contactKnockbackForce: 3
   groundCheckPoint: {fileID: 1186759029}
   groundCheckRadius: 0.2
   groundLayer:
