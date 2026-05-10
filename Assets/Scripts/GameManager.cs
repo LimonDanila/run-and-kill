@@ -9,11 +9,20 @@ public class GameManager : MonoBehaviour
     {
         if (panelSettings != null)
             panelSettings.SetActive(false);
+        ResetProgressOnStart();
+    }
+
+    private void ResetProgressOnStart()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("Level1Unlocked", 1);
+        PlayerPrefs.Save();
+        Debug.Log("Прогресс сброшен при запуске (только для тестирования)");
     }
 
     public void Play()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Levels");
     }
 
     public void Back()
