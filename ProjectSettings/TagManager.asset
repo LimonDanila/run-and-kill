@@ -12,10 +12,10 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - PlayerDead
+  - Player
+  - Enemy
+  - EnemyDead
   - 
   - 
   - 

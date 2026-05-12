@@ -30,6 +30,15 @@ public class HeroMove : MonoBehaviour
     public float hitStunDuration = 0.25f;
     public float invincibilityDuration = 1f;
 
+    [Header("Health Settings")]
+    public int maxHealth = 100;               // Максимальное здоровье
+    public int currentHealth;                 // Текущее здоровье
+
+    [Header("Stamina Settings")]
+    public int maxStamina = 4;                // Максимальная стамина
+    public float staminaRegenRate = 0.5f;     // Восстановление стамины в секунду
+    public float staminaRegenDelay = 1f;      // Задержка перед восстановлением после траты
+
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     public SpriteRenderer Sprite
@@ -59,8 +68,14 @@ public class HeroMove : MonoBehaviour
     private bool isBlockingRotation = false;
     private float lastDirection = 1f;
 
-    // НОВАЯ ПЕРЕМЕННАЯ ДЛЯ БЛОКИРОВКИ ПЕРЕХОДОВ
-    public bool isTakingDamage = false;  // Public чтобы можно было менять из другого скрипта
+    public bool isTakingDamage = false;
+
+    // Stamina variables
+    private int currentStamina;
+    private float staminaRegenTimer = 0f;
+    private float staminaRegenTickTimer = 0f;  // Таймер для пульсирующего восстановления
+    private bool isDead = false;
+    private bool isAttacking = false;
 
     void Start()
     {
@@ -68,11 +83,15 @@ public class HeroMove : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponent<Animator>();
         originalGravity = rb.gravityScale;
+
+        currentHealth = maxHealth;
+        currentStamina = maxStamina;
     }
 
     void Update()
     {
-        // ОБРАБОТКА ЗАЖАТОГО SHIFT
+        if (isDead) return;
+
         isBlockingRotation = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
         // Обновление таймеров
@@ -82,7 +101,6 @@ public class HeroMove : MonoBehaviour
             if (stunTimer <= 0f)
             {
                 isStunned = false;
-                Debug.Log("Стан закончился");
             }
         }
 
@@ -103,7 +121,37 @@ public class HeroMove : MonoBehaviour
             }
         }
 
-        // Не обрабатываем ввод если оглушён ИЛИ получает урон
+        // ========== ИСПРАВЛЕННОЕ ВОССТАНОВЛЕНИЕ СТАМИНЫ ==========
+        // Если стамина не максимальна и мы не атакуем и не получаем урон
+        if (currentStamina < maxStamina && !isAttacking && !isTakingDamage && !isStunned)
+        {
+            // Уменьшаем таймер задержки
+            if (staminaRegenTimer > 0)
+            {
+                staminaRegenTimer -= Time.deltaTime;
+            }
+            else
+            {
+                // Восстанавливаем стамину (пульсирующее восстановление)
+                staminaRegenTickTimer += Time.deltaTime;
+                if (staminaRegenTickTimer >= 0.1f) // Каждые 0.1 секунды
+                {
+                    staminaRegenTickTimer = 0f;
+                    currentStamina = Mathf.Min(maxStamina, currentStamina + Mathf.CeilToInt(staminaRegenRate * 0.1f));
+
+                    // Обновляем UI если есть
+                    OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+                }
+            }
+        }
+        else if (currentStamina >= maxStamina)
+        {
+            // Если стамина полная, сбрасываем таймер восстановления
+            staminaRegenTimer = 0;
+            staminaRegenTickTimer = 0;
+        }
+        // ==========================================================
+
         if (!isStunned && !isTakingDamage)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -145,16 +193,14 @@ public class HeroMove : MonoBehaviour
             }
         }
 
-        // Параметры для аниматора
         anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
         anim.SetBool("isGrounded", isGrounded);
         anim.SetFloat("verticalSpeed", rb.linearVelocity.y);
         anim.SetBool("isFalling", isFalling);
         anim.SetBool("isJumping", isJumping);
         anim.SetBool("justLanded", justLanded);
-
-        // НОВЫЙ ПАРАМЕТР: блокировка переходов при получении урона
         anim.SetBool("isTakingDamage", isTakingDamage);
+        anim.SetBool("isDead", isDead);
 
         if (Input.GetButtonDown("Jump") && isGrounded && !isStunned && !isTakingDamage)
         {
@@ -192,7 +238,6 @@ public class HeroMove : MonoBehaviour
             anim.SetBool("isJumping", false);
         }
 
-        // Поворот спрайта (только если не в стане, не получаем урон и не блокируем поворот)
         if (sprite != null && !isStunned && !isTakingDamage)
         {
             if (isBlockingRotation)
@@ -209,25 +254,77 @@ public class HeroMove : MonoBehaviour
         }
     }
 
+    public void SetAttacking(bool attacking)
+    {
+        isAttacking = attacking;
+
+        // Когда атака заканчивается, запускаем таймер восстановления стамины
+        if (!attacking && currentStamina < maxStamina)
+        {
+            staminaRegenTimer = staminaRegenDelay;
+            staminaRegenTickTimer = 0;
+        }
+    }
+
+    public bool HasEnoughStamina(int amount)
+    {
+        return currentStamina >= amount;
+    }
+
+    public void UseStamina(int amount)
+    {
+        currentStamina -= amount;
+        staminaRegenTimer = staminaRegenDelay;  // Сбрасываем таймер восстановления
+        staminaRegenTickTimer = 0;               // Сбрасываем тик-таймер
+
+        // Обновляем UI если есть
+        OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+
+        // Если стамина кончилась, возможно блокируем действия
+        if (currentStamina <= 0)
+        {
+            Debug.Log("Статична кончилась!");
+        }
+    }
+
+    public int GetCurrentStamina()
+    {
+        return currentStamina;
+    }
+
+    public int GetMaxStamina()
+    {
+        return maxStamina;
+    }
+
+    // События для UI
+    public System.Action<int, int> OnHealthChanged;
+    public System.Action<int, int> OnStaminaChanged;
+
     public void TakeHit(int damage, float attackerX)
     {
-        if (isInvincible)
-        {
-            Debug.Log("Урон проигнорирован (неуязвимость)");
-            return;
-        }
-
+        if (isInvincible || isDead) return;
         if (isStunned) return;
 
-        Debug.Log($"Герой получил урон: {damage}");
+        // Уменьшаем здоровье
+        currentHealth -= damage;
+        Debug.Log($"Герой получил урон: {damage}. Осталось здоровья: {currentHealth}");
+
+        // Обновляем UI
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        // Проверяем смерть
+        if (currentHealth <= 0)
+        {
+            Die();
+            return;
+        }
 
         isInvincible = true;
         invincibilityTimer = invincibilityDuration;
 
-        // Включаем флаг получения урона (блокирует переходы в Idle/Run)
         isTakingDamage = true;
 
-        // Запускаем анимацию получения урона
         anim.SetTrigger("Hit");
 
         isStunned = true;
@@ -240,11 +337,81 @@ public class HeroMove : MonoBehaviour
         anim.SetBool("isJumping", false);
     }
 
-    // НОВЫЙ МЕТОД: Вызывается из Animation Event в конце анимации hero_hit
     public void OnDamageAnimationEnd()
     {
-        Debug.Log("Анимация получения урона закончилась");
         isTakingDamage = false;
+    }
+
+    public void Die()
+    {
+        if (isDead) return;
+
+        isDead = true;
+        isTakingDamage = false;
+        isStunned = false;
+        isAttacking = false;
+
+        // Меняем слой трупа на "PlayerDead"
+        int deadLayer = LayerMask.NameToLayer("PlayerDead");
+        if (deadLayer != -1)
+        {
+            gameObject.layer = deadLayer;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = deadLayer;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Слой 'PlayerDead' не найден! Создайте его в Project Settings → Tags and Layers");
+        }
+
+        // ПОЛНОСТЬЮ ОБНУЛЯЕМ СКОРОСТЬ по всем осям
+        rb.linearVelocity = Vector2.zero;  // Обнуляем и X, и Y скорость
+        rb.angularVelocity = 0f;           // Обнуляем вращение
+
+        // Устанавливаем нормальную гравитацию
+        rb.gravityScale = originalGravity;
+
+        // Запрещаем вращение (чтобы труп не крутился)
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        // Запускаем анимацию смерти
+        anim.SetTrigger("Death");
+        anim.SetBool("isDead", true);
+
+        // Отключаем скрипты
+        HeroCombat combat = GetComponent<HeroCombat>();
+        if (combat != null) combat.enabled = false;
+
+        Debug.Log("Герой погиб!");
+
+        OnHealthChanged?.Invoke(0, maxHealth);
+    }
+
+    // Вспомогательный метод для восстановления здоровья (например, аптечки)
+    public void Heal(int amount)
+    {
+        if (isDead) return;
+
+        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        Debug.Log($"Герой восстановил {amount} здоровья. Теперь: {currentHealth}");
+    }
+
+    public bool IsDead
+    {
+        get { return isDead; }
+    }
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
     }
 
     public float GetFacingDirection()

@@ -949,7 +949,7 @@ GameObject:
   - component: {fileID: 862087731}
   - component: {fileID: 862087734}
   - component: {fileID: 862087733}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hero
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1074,6 +1074,11 @@ MonoBehaviour:
   hitKnockbackForce: 5
   hitStunDuration: 0.25
   invincibilityDuration: 0.25
+  maxHealth: 100
+  currentHealth: 0
+  maxStamina: 4
+  staminaRegenRate: 0.5
+  staminaRegenDelay: 1
   isTakingDamage: 0
 --- !u!95 &862087733
 Animator:
@@ -1110,10 +1115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroCombat
   attackRange: 1
-  lightAttackCooldown: 0.2
-  heavyAttackCooldown: 0.5
   lightAttackDamage: 10
   heavyAttackDamage: 25
+  lightAttackStaminaCost: 1
+  heavyAttackStaminaCost: 2
   hitEffectPrefab: {fileID: 0}
 --- !u!1 &1175193590
 GameObject:
@@ -2149,7 +2154,7 @@ GameObject:
   - component: {fileID: 1482906801}
   - component: {fileID: 1482906804}
   - component: {fileID: 1482906800}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Skeleton
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2285,7 +2290,7 @@ MonoBehaviour:
   detectionRange: 2.3
   attackRange: 1.2
   attackCooldown: 1
-  damage: 5
+  damage: 30
   maxHealth: 30
   knockbackForce: 5
   invincibilityDuration: 0.25

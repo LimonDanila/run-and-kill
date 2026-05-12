@@ -19,8 +19,8 @@ public class MeleeEnemy : MonoBehaviour
     public float invincibilityDuration = 0.5f;
 
     [Header("Contact Damage Settings")]
-    public float contactDamageCooldown = 1f;  // Задержка между уроном при касании
-    public float contactKnockbackForce = 3f;   // Сила отбрасывания при касании
+    public float contactDamageCooldown = 1f;
+    public float contactKnockbackForce = 3f;
 
     [Header("Ground Check")]
     public Transform groundCheckPoint;
@@ -57,8 +57,10 @@ public class MeleeEnemy : MonoBehaviour
     private bool isInvincible = false;
     private float invincibilityTimer = 0f;
 
-    // НОВЫЕ ПЕРЕМЕННЫЕ ДЛЯ КОНТАКТНОГО УРОНА
     private float lastContactDamageTime = 0f;
+
+    // NEW: Кешируем компонент героя
+    private HeroMove heroMove;
 
     void Start()
     {
@@ -79,6 +81,18 @@ public class MeleeEnemy : MonoBehaviour
 
         rb.gravityScale = 1f;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        if (player != null)
+        {
+            heroMove = player.GetComponent<HeroMove>();
+        }
+
+        // Устанавливаем слой для живого скелета
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = LayerMask.NameToLayer("Enemy");
+        }
     }
 
     void Update()
@@ -105,7 +119,8 @@ public class MeleeEnemy : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
         UpdateAnimations();
 
-        if (canAttack && !isAttacking && !isHitting && IsPlayerDetected())
+        // Проверка атаки ТОЛЬКО если герой жив
+        if (canAttack && !isAttacking && !isHitting && IsPlayerAlive() && IsPlayerDetected())
         {
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
             if (distanceToPlayer <= attackRange)
@@ -135,21 +150,17 @@ public class MeleeEnemy : MonoBehaviour
         UpdateSpriteDirection();
     }
 
-    // НОВЫЙ МЕТОД: Обработка столкновения с героем
     void OnCollisionStay2D(Collision2D collision)
     {
-        // Проверяем, не мёртв ли скелет и не в процессе атаки
         if (isDead) return;
 
-        // Проверяем, что столкнулись с героем
+        // Проверяем, жив ли герой, прежде чем наносить урон при касании
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Проверяем задержку между уроном
-            if (Time.time - lastContactDamageTime >= contactDamageCooldown)
+            if (IsPlayerAlive() && Time.time - lastContactDamageTime >= contactDamageCooldown)
             {
                 lastContactDamageTime = Time.time;
 
-                // Наносим урон герою
                 HeroMove heroMovement = collision.gameObject.GetComponent<HeroMove>();
                 if (heroMovement != null)
                 {
@@ -160,26 +171,25 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    // Альтернативный вариант: использование Trigger
-    //void OnTriggerStay2D(Collider2D other)
-    //{
-    //    if (isDead) return;
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (isDead) return;
 
-    //    if (other.CompareTag("Hero") || other.CompareTag("Player"))
-    //    {
-    //        if (Time.time - lastContactDamageTime >= contactDamageCooldown)
-    //        {
-    //            lastContactDamageTime = Time.time;
+        if (other.CompareTag("Player"))
+        {
+            if (IsPlayerAlive() && Time.time - lastContactDamageTime >= contactDamageCooldown)
+            {
+                lastContactDamageTime = Time.time;
 
-    //            HeroMove heroMovement = other.GetComponent<HeroMove>();
-    //            if (heroMovement != null)
-    //            {
-    //                heroMovement.TakeHit(damage, transform.position.x);
-    //                Debug.Log($"Скелет нанёс урон (триггер): {damage}");
-    //            }
-    //        }
-    //    }
-    //}
+                HeroMove heroMovement = other.GetComponent<HeroMove>();
+                if (heroMovement != null)
+                {
+                    heroMovement.TakeHit(damage, transform.position.x);
+                    Debug.Log($"Скелет нанёс урон (триггер): {damage}");
+                }
+            }
+        }
+    }
 
     IEnumerator PerformAttack()
     {
@@ -198,9 +208,24 @@ public class MeleeEnemy : MonoBehaviour
         canAttack = true;
     }
 
+    // НОВЫЙ МЕТОД: Проверка жив ли герой
+    bool IsPlayerAlive()
+    {
+        if (player == null) return false;
+        if (heroMove == null)
+        {
+            heroMove = player.GetComponent<HeroMove>();
+        }
+        // Если герой мёртв или компонент отсутствует - возвращаем false
+        if (heroMove == null) return false;
+        return !heroMove.IsDead;
+    }
+
     public void DealFirstHit()
     {
+        // Наносим урон только если герой жив
         if (player == null) return;
+        if (!IsPlayerAlive()) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         if (distanceToPlayer <= attackRange)
@@ -216,7 +241,9 @@ public class MeleeEnemy : MonoBehaviour
 
     public void DealSecondHit()
     {
+        // Наносим урон только если герой жив
         if (player == null) return;
+        if (!IsPlayerAlive()) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         if (distanceToPlayer <= attackRange)
@@ -230,6 +257,15 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
+    bool IsPlayerDetected()
+    {
+        if (player == null) return false;
+        // НЕ обнаруживаем героя, если он мёртв
+        if (!IsPlayerAlive()) return false;
+
+        return Vector2.Distance(transform.position, player.position) <= detectionRange;
+    }
+
     public void TakeDamage(int damage, float attackerX)
     {
         if (isDead) return;
@@ -241,6 +277,7 @@ public class MeleeEnemy : MonoBehaviour
         }
 
         currentHealth -= damage;
+        Debug.Log($"Скелет получил урон: {damage}. Осталось здоровья: {currentHealth}");
 
         isInvincible = true;
         invincibilityTimer = invincibilityDuration;
@@ -278,27 +315,52 @@ public class MeleeEnemy : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
+
         isDead = true;
         canAttack = false;
+
+        // Меняем слой на "EnemyDead" (труп не взаимодействует с игроком)
+        int deadLayer = LayerMask.NameToLayer("EnemyDead");
+        if (deadLayer != -1)
+        {
+            gameObject.layer = deadLayer;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = deadLayer;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Слой 'EnemyDead' не найден! Создайте его в Project Settings → Tags and Layers");
+        }
+
         rb.linearVelocity = Vector2.zero;
+        rb.gravityScale = 1f;
+
+        // Разрешаем вращение для реалистичного падения (опционально)
+        // rb.constraints = RigidbodyConstraints2D.None;
+        // rb.AddTorque(Random.Range(-3f, 3f));
 
         anim.SetTrigger("Death");
         anim.SetBool("isDead", true);
 
-        GetComponent<Collider2D>().enabled = false;
+        // Отключаем коллайдер или оставляем его? Оставляем для земли
+        // GetComponent<Collider2D>().enabled = true; // Не отключаем!
 
-        Destroy(gameObject, 2f);
-    }
+        // Отключаем скрипт, чтобы скелет не двигался и не атаковал
+        this.enabled = false;
 
-    // Свойство для доступа к неуязвимости (опционально)
-    public bool IsInvincible
-    {
-        get { return isInvincible; }
+        // Удаляем объект через несколько секунд (опционально)
+        Destroy(gameObject, 5f);
+
+        Debug.Log("Скелет погиб и переключен на слой EnemyDead");
     }
 
     float GetMovementDirection()
     {
-        if (IsPlayerDetected())
+        // Если герой жив и видим - идём к нему
+        if (IsPlayerAlive() && IsPlayerDetected())
         {
             float directionToPlayer = Mathf.Sign(player.position.x - transform.position.x);
             int moveDir = (int)directionToPlayer;
@@ -312,6 +374,8 @@ public class MeleeEnemy : MonoBehaviour
             }
             return GetPatrolDirection();
         }
+
+        // Если герой мёртв или не видим - патрулируем
         return GetPatrolDirection();
     }
 
@@ -336,17 +400,11 @@ public class MeleeEnemy : MonoBehaviour
         return patrolDirection;
     }
 
-    bool IsPlayerDetected()
-    {
-        if (player == null) return false;
-        return Vector2.Distance(transform.position, player.position) <= detectionRange;
-    }
-
     void CheckWall()
     {
         int checkDirection = (int)patrolDirection;
 
-        if (IsPlayerDetected() && player != null)
+        if (IsPlayerAlive() && IsPlayerDetected() && player != null)
         {
             checkDirection = (int)Mathf.Sign(player.position.x - transform.position.x);
         }
@@ -365,7 +423,7 @@ public class MeleeEnemy : MonoBehaviour
     {
         int checkDirection = (int)patrolDirection;
 
-        if (IsPlayerDetected() && player != null)
+        if (IsPlayerAlive() && IsPlayerDetected() && player != null)
         {
             checkDirection = (int)Mathf.Sign(player.position.x - transform.position.x);
         }
@@ -383,7 +441,7 @@ public class MeleeEnemy : MonoBehaviour
 
         bool shouldFaceRight;
 
-        if (IsPlayerDetected() && player != null)
+        if (IsPlayerAlive() && IsPlayerDetected() && player != null)
         {
             shouldFaceRight = player.position.x > transform.position.x;
         }
@@ -434,7 +492,7 @@ public class MeleeEnemy : MonoBehaviour
 
         Gizmos.color = Color.blue;
         int checkDir = (int)patrolDirection;
-        if (IsPlayerDetected() && player != null)
+        if (IsPlayerAlive() && IsPlayerDetected() && player != null)
             checkDir = (int)Mathf.Sign(player.position.x - transform.position.x);
         Vector3 wallCheckDir = checkDir > 0 ? Vector3.right : Vector3.left;
         Gizmos.DrawRay(transform.position, wallCheckDir * wallCheckDistance);

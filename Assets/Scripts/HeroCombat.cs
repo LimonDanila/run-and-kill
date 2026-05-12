@@ -4,11 +4,13 @@ using System.Collections;
 public class HeroCombat : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public float attackRange = 1f;
-    public float lightAttackCooldown = 0.4f;
-    public float heavyAttackCooldown = 1f;
+    public float attackRange = 1.2f;
     public int lightAttackDamage = 10;
     public int heavyAttackDamage = 25;
+
+    [Header("Stamina Costs")]
+    public int lightAttackStaminaCost = 1;
+    public int heavyAttackStaminaCost = 2;
 
     [Header("Hit Effect")]
     public GameObject hitEffectPrefab;
@@ -18,8 +20,7 @@ public class HeroCombat : MonoBehaviour
     private SpriteRenderer sprite;
 
     private bool isAttacking = false;
-    private bool canLightAttack = true;
-    private bool canHeavyAttack = true;
+    private bool canAct = true;
 
     void Start()
     {
@@ -30,27 +31,41 @@ public class HeroCombat : MonoBehaviour
 
     void Update()
     {
-        if (movement != null && movement.IsStunned) return;
+        if (movement == null || movement.IsDead) return;
+        if (movement.IsStunned || movement.isTakingDamage) return;
 
         // Быстрая атака (левая кнопка мыши)
-        if (Input.GetMouseButtonDown(0) && canLightAttack && !isAttacking && movement)
+        if (Input.GetMouseButtonDown(0) && !isAttacking && !movement.IsStunned)
         {
-            StartCoroutine(LightAttack());
+            if (movement.HasEnoughStamina(lightAttackStaminaCost))
+            {
+                StartCoroutine(LightAttack());
+            }
+            else
+            {
+                Debug.Log("Недостаточно стамины для быстрой атаки!");
+            }
         }
 
         // Сильная атака (правая кнопка мыши)
-        if (Input.GetMouseButtonDown(1) && canHeavyAttack && !isAttacking && movement)
+        if (Input.GetMouseButtonDown(1) && !isAttacking && !movement.IsStunned)
         {
-            StartCoroutine(HeavyAttack());
+            if (movement.HasEnoughStamina(heavyAttackStaminaCost))
+            {
+                StartCoroutine(HeavyAttack());
+            }
+            else
+            {
+                Debug.Log("Недостаточно стамины для сильной атаки!");
+            }
         }
     }
 
     IEnumerator LightAttack()
     {
         isAttacking = true;
-        canLightAttack = false;
-
-        Debug.Log("Быстрая атака!");
+        movement.SetAttacking(true);
+        movement.UseStamina(lightAttackStaminaCost);
 
         anim.SetTrigger("Attack1");
         anim.SetBool("isAttacking", true);
@@ -62,52 +77,36 @@ public class HeroCombat : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         isAttacking = false;
+        movement.SetAttacking(false);
         anim.SetBool("isAttacking", false);
-
-        yield return new WaitForSeconds(lightAttackCooldown);
-        canLightAttack = true;
     }
 
     IEnumerator HeavyAttack()
     {
         isAttacking = true;
-        canHeavyAttack = false;
-
-        Debug.Log("Сильная атака!");
+        movement.SetAttacking(true);
+        movement.UseStamina(heavyAttackStaminaCost);
 
         anim.SetTrigger("Attack2");
         anim.SetBool("isAttacking", true);
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.7f);
 
         anim.SetTrigger("EndAttack");
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
         isAttacking = false;
+        movement.SetAttacking(false);
         anim.SetBool("isAttacking", false);
-
-        yield return new WaitForSeconds(heavyAttackCooldown);
-        canHeavyAttack = true;
     }
 
-    // Метод для быстрой атаки из Animation Event
     public void DealLightDamage()
     {
-        // Определяем направление атаки (куда смотрит персонаж)
-        float direction = 1f;
-        if (movement != null)
-        {
-            direction = movement.GetFacingDirection();
-        }
-        else if (sprite != null)
-        {
-            direction = sprite.flipX ? -1f : 1f;
-        }
+        if (movement != null && movement.IsDead) return;
 
+        float direction = movement != null ? movement.GetFacingDirection() : (sprite.flipX ? -1f : 1f);
         Vector2 attackOrigin = new Vector2(transform.position.x + direction * attackRange, transform.position.y);
-
-        Debug.Log($"Быстрая атака! Урон: {lightAttackDamage}, Направление: {(direction > 0 ? "Вправо" : "Влево")}");
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackOrigin, attackRange);
 
@@ -130,23 +129,12 @@ public class HeroCombat : MonoBehaviour
         }
     }
 
-    // Метод для сильной атаки из Animation Event
     public void DealHeavyDamage()
     {
-        // Определяем направление атаки (куда смотрит персонаж)
-        float direction = 1f;
-        if (movement != null)
-        {
-            direction = movement.GetFacingDirection();
-        }
-        else if (sprite != null)
-        {
-            direction = sprite.flipX ? -1f : 1f;
-        }
+        if (movement != null && movement.IsDead) return;
 
+        float direction = movement != null ? movement.GetFacingDirection() : (sprite.flipX ? -1f : 1f);
         Vector2 attackOrigin = new Vector2(transform.position.x + direction * attackRange, transform.position.y);
-
-        Debug.Log($"Сильная атака! Урон: {heavyAttackDamage}, Направление: {(direction > 0 ? "Вправо" : "Влево")}");
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackOrigin, attackRange);
 
@@ -169,33 +157,14 @@ public class HeroCombat : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, float attackerX)
-    {
-        if (movement != null)
-        {
-            movement.TakeHit(damage, attackerX);
-        }
-
-        if (anim != null)
-        {
-            anim.SetTrigger("Hit");
-        }
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-
         float direction = 1f;
         if (movement != null)
-        {
             direction = movement.GetFacingDirection();
-        }
         else if (sprite != null)
-        {
             direction = sprite.flipX ? -1f : 1f;
-        }
-
         Vector2 attackOrigin = new Vector2(transform.position.x + direction * attackRange, transform.position.y);
         Gizmos.DrawWireSphere(attackOrigin, attackRange);
     }
