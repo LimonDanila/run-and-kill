@@ -40,6 +40,15 @@ public class LevelComplete : MonoBehaviour
 
     public void BackToLevels()
     {
+        PlayButtonSound();
         SceneManager.LoadScene("Levels");
+    }
+
+    private void PlayButtonSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
     }
 }

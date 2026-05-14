@@ -36,13 +36,14 @@ public class LevelManager : MonoBehaviour
 
     public void LoadLevel(int levelIndex)
     {
+        PlayButtonSound();
         string levelName = "";
 
         switch (levelIndex)
         {
             case 1:
                 if (PlayerPrefs.GetInt("Level1Unlocked") == 1)
-                    levelName = "SampleScene";
+                    levelName = "Level1";
                 break;
             case 2:
                 if (PlayerPrefs.GetInt("Level2Unlocked") == 1)
@@ -70,11 +71,21 @@ public class LevelManager : MonoBehaviour
 
     public void OpenShop()
     {
+        PlayButtonSound();
         SceneManager.LoadScene("Shop");
     }
 
     public void BackToMenu()
     {
+        PlayButtonSound();
         SceneManager.LoadScene("Menu");
+    }
+
+    private void PlayButtonSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
     }
 }

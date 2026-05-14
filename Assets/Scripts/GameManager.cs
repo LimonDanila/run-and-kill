@@ -22,16 +22,41 @@ public class GameManager : MonoBehaviour
 
     public void Play()
     {
+        PlayButtonSound();
         SceneManager.LoadScene("Levels");
     }
 
     public void Back()
     {
+        PlayButtonSound();
         SceneManager.LoadScene("Menu");
     }
 
     public void Exit()
     {
+        PlayButtonSound();
         Application.Quit();
+    }
+
+    public void OpenSettings()
+    {
+        PlayButtonSound();
+        if (panelSettings != null)
+            panelSettings.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        PlayButtonSound();
+        if (panelSettings != null)
+            panelSettings.SetActive(false);
+    }
+
+    private void PlayButtonSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
     }
 }
