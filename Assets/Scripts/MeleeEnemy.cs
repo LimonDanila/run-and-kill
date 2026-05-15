@@ -82,7 +82,22 @@ public class MeleeEnemy : MonoBehaviour
         rb.gravityScale = 1f;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        if (player != null)
+        if (player == null)
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+            if (playerObject != null)
+            {
+                player = playerObject.transform;
+                heroMove = playerObject.GetComponent<HeroMove>();
+                Debug.Log("Скелет: игрок найден автоматически!");
+            }
+            else
+            {
+                Debug.LogWarning("Скелет: не удалось найти игрока на сцене!");
+            }
+        }
+        else
         {
             heroMove = player.GetComponent<HeroMove>();
         }
@@ -355,6 +370,11 @@ public class MeleeEnemy : MonoBehaviour
         Destroy(gameObject, 5f);
 
         Debug.Log("Скелет погиб и переключен на слой EnemyDead");
+    }
+
+    public bool IsDead
+    {
+        get { return isDead; }
     }
 
     float GetMovementDirection()

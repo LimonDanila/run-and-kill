@@ -24,6 +24,7 @@ public class HeroMove : MonoBehaviour
     public Transform groundCheckPoint;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
+    public LayerMask rightWallLayer;
 
     [Header("Hit Settings")]
     public float hitKnockbackForce = 5f;
@@ -474,8 +475,9 @@ public class HeroMove : MonoBehaviour
 
     bool CheckWallAtPoint(Vector2 point, Vector2 direction)
     {
-        RaycastHit2D hit = Physics2D.Raycast(point, direction, wallCheckDistance, groundLayer);
-        return hit.collider != null;
+        RaycastHit2D hit1 = Physics2D.Raycast(point, direction, wallCheckDistance, groundLayer);
+        RaycastHit2D hit2 = Physics2D.Raycast(point, direction, wallCheckDistance, rightWallLayer);
+        return hit1.collider != null || hit2.collider != null;
     }
 
     void FixedUpdate()
