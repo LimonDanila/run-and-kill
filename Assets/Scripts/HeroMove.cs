@@ -78,6 +78,9 @@ public class HeroMove : MonoBehaviour
     private bool isDead = false;
     private bool isAttacking = false;
 
+    private bool isSimulatingMovement = false;
+    private float simulatedHorizontalInput = 0f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -155,7 +158,16 @@ public class HeroMove : MonoBehaviour
 
         if (!isStunned && !isTakingDamage)
         {
-            horizontalInput = Input.GetAxisRaw("Horizontal");
+            if (isSimulatingMovement)
+            {
+                // Используем эмулированный ввод
+                horizontalInput = simulatedHorizontalInput;
+            }
+            else
+            {
+                // Нормальный ввод с клавиатуры
+                horizontalInput = Input.GetAxisRaw("Horizontal");
+            }
 
             if (!isBlockingRotation && horizontalInput != 0)
             {
@@ -253,6 +265,21 @@ public class HeroMove : MonoBehaviour
                     sprite.flipX = true;
             }
         }
+    }
+
+    public void StartMovingRight()
+    {
+        isSimulatingMovement = true;
+        simulatedHorizontalInput = 1f;
+        Debug.Log("HeroMove: начата эмуляция движения вправо");
+    }
+
+    // Вызывается из кат-сцены для остановки эмуляции
+    public void StopMovingRight()
+    {
+        isSimulatingMovement = false;
+        simulatedHorizontalInput = 0f;
+        Debug.Log("HeroMove: эмуляция движения остановлена");
     }
 
     public void SetAttacking(bool attacking)

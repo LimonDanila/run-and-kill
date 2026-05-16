@@ -3,28 +3,16 @@ using UnityEngine;
 public class CameraMover : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float moveSpeed = 2f;           // Скорость движения камеры вправо
-    public float accelerationTime = 3f;    // Время разгона до максимальной скорости
-    public bool autoStart = true;          // Начинать ли движение сразу
+    public float moveSpeed = 3f;
+    public float accelerationTime = 2f;
 
     private float currentSpeed = 0f;
     private bool isMoving = false;
-    private Camera mainCamera;
-
-    void Start()
-    {
-        mainCamera = GetComponent<Camera>();
-        if (autoStart)
-        {
-            StartMoving();
-        }
-    }
 
     void Update()
     {
         if (!isMoving) return;
 
-        // Плавный разгон
         if (currentSpeed < moveSpeed)
         {
             currentSpeed += (moveSpeed / accelerationTime) * Time.deltaTime;
@@ -32,30 +20,34 @@ public class CameraMover : MonoBehaviour
                 currentSpeed = moveSpeed;
         }
 
-        // Движение камеры вправо
         transform.Translate(Vector3.right * currentSpeed * Time.deltaTime);
     }
 
     public void StartMoving()
     {
         isMoving = true;
-        currentSpeed = 0f;
-        Debug.Log("Камера начала движение");
+        Debug.Log("CameraMover: движение начато");
     }
 
     public void StopMoving()
     {
         isMoving = false;
-        Debug.Log("Камера остановилась");
+        currentSpeed = 0f;
+        Debug.Log("CameraMover: движение остановлено");
     }
 
-    public void SetSpeed(float newSpeed)
+    public void SetSpeed(float speed)
     {
-        moveSpeed = newSpeed;
+        moveSpeed = speed;
     }
 
     public float GetCurrentSpeed()
     {
         return currentSpeed;
+    }
+
+    public bool IsMoving()
+    {
+        return isMoving;
     }
 }

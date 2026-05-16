@@ -77,12 +77,12 @@ public class ObjectMover : MonoBehaviour
     void FindObjectsByTags()
     {
         // Ищем объекты по тегам
-        GameObject[] background = GameObject.FindGameObjectsWithTag("Background");
-        GameObject[] spikes = GameObject.FindGameObjectsWithTag("Spikes");
+        //GameObject[] background = GameObject.FindGameObjectsWithTag("Background");
+        //GameObject[] spikes = GameObject.FindGameObjectsWithTag("Spikes");
 
         objectsToMove.Clear();
-        objectsToMove.AddRange(background);
-        objectsToMove.AddRange(spikes);
+        //objectsToMove.AddRange(background);
+        //objectsToMove.AddRange(spikes);
 
         // Убираем дубликаты
         HashSet<GameObject> uniqueObjects = new HashSet<GameObject>(objectsToMove);
