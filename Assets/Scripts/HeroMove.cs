@@ -490,14 +490,6 @@ public class HeroMove : MonoBehaviour
 
         wallOnLeft = leftTop || leftMiddle || leftBottom;
         wallOnRight = rightTop || rightMiddle || rightBottom;
-
-        if (!isGrounded && (wallOnLeft || wallOnRight))
-        {
-            if (leftTop && horizontalInput < 0)
-                Debug.Log("Застревает ГОЛОВОЙ слева!");
-            if (rightTop && horizontalInput > 0)
-                Debug.Log("Застревает ГОЛОВОЙ справа!");
-        }
     }
 
     bool CheckWallAtPoint(Vector2 point, Vector2 direction)

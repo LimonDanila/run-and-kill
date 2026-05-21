@@ -227,6 +227,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  rightWallLayer:
+    serializedVersion: 2
+    m_Bits: 0
   hitKnockbackForce: 5
   hitStunDuration: 0.25
   invincibilityDuration: 0.25

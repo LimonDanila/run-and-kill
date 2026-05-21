@@ -37,32 +37,32 @@ public class MeleeEnemy : MonoBehaviour
     [Header("Hero Check")]
     public Transform player;
 
-    private Rigidbody2D rb;
-    private SpriteRenderer sprite;
-    private Animator anim;
+    protected Rigidbody2D rb;
+    protected SpriteRenderer sprite;
+    protected Animator anim;
 
-    private float startX;
-    private float patrolDirection = 1f;
-    private bool isGrounded;
-    private bool isTouchingWall;
-    private bool isNearEdge;
-    private bool facingRight = true;
-    private float currentDirection = 1f;
+    protected float startX;
+    protected float patrolDirection = 1f;
+    protected bool isGrounded;
+    protected bool isTouchingWall;
+    protected bool isNearEdge;
+    protected bool facingRight = true;
+    protected float currentDirection = 1f;
 
-    private int currentHealth;
-    private bool isAttacking = false;
-    private bool canAttack = true;
-    private bool isDead = false;
-    private bool isHitting = false;
-    private bool isInvincible = false;
-    private float invincibilityTimer = 0f;
+    protected int currentHealth;
+    protected bool isAttacking = false;
+    protected bool canAttack = true;
+    protected bool isDead = false;
+    protected bool isHitting = false;
+    protected bool isInvincible = false;
+    protected float invincibilityTimer = 0f;
 
-    private float lastContactDamageTime = 0f;
+    protected float lastContactDamageTime = 0f;
 
     // NEW: Кешируем компонент героя
-    private HeroMove heroMove;
+    protected HeroMove heroMove;
 
-    void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
@@ -110,7 +110,7 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (isDead) return;
 
@@ -145,7 +145,7 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (isDead || isAttacking || isHitting) return;
 
@@ -165,7 +165,7 @@ public class MeleeEnemy : MonoBehaviour
         UpdateSpriteDirection();
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    protected void OnCollisionStay2D(Collision2D collision)
     {
         if (isDead) return;
 
@@ -186,7 +186,7 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D other)
+    protected void OnTriggerStay2D(Collider2D other)
     {
         if (isDead) return;
 
@@ -206,7 +206,7 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    IEnumerator PerformAttack()
+    protected virtual IEnumerator PerformAttack()
     {
         isAttacking = true;
         canAttack = false;
@@ -224,7 +224,7 @@ public class MeleeEnemy : MonoBehaviour
     }
 
     // НОВЫЙ МЕТОД: Проверка жив ли герой
-    bool IsPlayerAlive()
+    protected bool IsPlayerAlive()
     {
         if (player == null) return false;
         if (heroMove == null)
@@ -272,7 +272,7 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    bool IsPlayerDetected()
+    protected bool IsPlayerDetected()
     {
         if (player == null) return false;
         // НЕ обнаруживаем героя, если он мёртв
@@ -305,7 +305,7 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    IEnumerator HandleHit(float attackerX)
+    protected virtual IEnumerator HandleHit(float attackerX)
     {
         isHitting = true;
         isAttacking = false;
@@ -328,7 +328,7 @@ public class MeleeEnemy : MonoBehaviour
         canAttack = true;
     }
 
-    void Die()
+    protected void Die()
     {
         if (isDead) return;
 
@@ -377,7 +377,7 @@ public class MeleeEnemy : MonoBehaviour
         get { return isDead; }
     }
 
-    float GetMovementDirection()
+    protected float GetMovementDirection()
     {
         // Если герой жив и видим - идём к нему
         if (IsPlayerAlive() && IsPlayerDetected())
@@ -399,7 +399,7 @@ public class MeleeEnemy : MonoBehaviour
         return GetPatrolDirection();
     }
 
-    float GetPatrolDirection()
+    protected float GetPatrolDirection()
     {
         float currentX = transform.position.x;
 
@@ -420,7 +420,7 @@ public class MeleeEnemy : MonoBehaviour
         return patrolDirection;
     }
 
-    void CheckWall()
+    protected void CheckWall()
     {
         int checkDirection = (int)patrolDirection;
 
@@ -439,7 +439,7 @@ public class MeleeEnemy : MonoBehaviour
         isTouchingWall = hit.collider != null;
     }
 
-    void CheckEdge()
+    protected void CheckEdge()
     {
         int checkDirection = (int)patrolDirection;
 
@@ -455,7 +455,7 @@ public class MeleeEnemy : MonoBehaviour
         isNearEdge = hit.collider == null;
     }
 
-    void UpdateSpriteDirection()
+    protected void UpdateSpriteDirection()
     {
         if (sprite == null) return;
 
@@ -482,7 +482,7 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    void UpdateAnimations()
+    protected void UpdateAnimations()
     {
         if (anim == null) return;
 

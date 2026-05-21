@@ -647,8 +647,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11c73c720be4cb469e52106133c0054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMover
-  moveSpeed: 1
+  initialMoveSpeed: 1
+  maxMoveSpeed: 4.5
   accelerationTime: 3
+  progressiveAcceleration: 1
+  timeToMaxSpeed: 150
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.011904762
+      outSlope: 0.011904762
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.4
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &583122318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2248,10 +2275,13 @@ MonoBehaviour:
   - {fileID: 2842528747390029046, guid: b664a81b5fab4ee4982fb9cc8ac2d9a8, type: 3}
   - {fileID: 5143383651533561779, guid: b2ad71fe1835495428e193b63690c4f5, type: 3}
   - {fileID: 6093505323959460631, guid: 96398add494762d4c80de1975b02befc, type: 3}
+  - {fileID: 5143383651533561779, guid: a728e427185385c4b801f0fa1b543cc7, type: 3}
+  - {fileID: 2842528747390029046, guid: eb7cb596af265e84ab539c347810a552, type: 3}
+  - {fileID: 2842528747390029046, guid: 912df38dfa11eaa42903470603736e75, type: 3}
   startChunkPrefab: {fileID: 7876459691548554193, guid: 5e31548ed92a8f04e97526d67d72cae5, type: 3}
   chunkWidth: 18
-  chunksToPreload: 3
-  chunksToKeep: 4
+  chunksToPreload: 2
+  chunksToKeep: 2
   cameraTransform: {fileID: 519420032}
   playerTransform: {fileID: 346820972}
   spawnOffsetX: 0
