@@ -381,17 +381,10 @@ public class HeroMove : MonoBehaviour
 
         // Меняем слой трупа на "PlayerDead"
         int deadLayer = LayerMask.NameToLayer("PlayerDead");
-        if (deadLayer != -1)
+        gameObject.layer = deadLayer;
+        foreach (Transform child in transform)
         {
-            gameObject.layer = deadLayer;
-            foreach (Transform child in transform)
-            {
-                child.gameObject.layer = deadLayer;
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Слой 'PlayerDead' не найден! Создайте его в Project Settings → Tags and Layers");
+            child.gameObject.layer = deadLayer;
         }
 
         // ПОЛНОСТЬЮ ОБНУЛЯЕМ СКОРОСТЬ по всем осям
@@ -403,6 +396,8 @@ public class HeroMove : MonoBehaviour
 
         // Запрещаем вращение (чтобы труп не крутился)
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        horizontalInput = 0;
 
         // Запускаем анимацию смерти
         anim.SetTrigger("Death");

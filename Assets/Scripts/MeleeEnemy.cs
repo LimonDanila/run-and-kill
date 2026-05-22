@@ -165,47 +165,6 @@ public class MeleeEnemy : MonoBehaviour
         UpdateSpriteDirection();
     }
 
-    protected void OnCollisionStay2D(Collision2D collision)
-    {
-        if (isDead) return;
-
-        // Проверяем, жив ли герой, прежде чем наносить урон при касании
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (IsPlayerAlive() && Time.time - lastContactDamageTime >= contactDamageCooldown)
-            {
-                lastContactDamageTime = Time.time;
-
-                HeroMove heroMovement = collision.gameObject.GetComponent<HeroMove>();
-                if (heroMovement != null)
-                {
-                    heroMovement.TakeHit(damage, transform.position.x);
-                    Debug.Log($"Скелет нанёс урон при касании: {damage}");
-                }
-            }
-        }
-    }
-
-    protected void OnTriggerStay2D(Collider2D other)
-    {
-        if (isDead) return;
-
-        if (other.CompareTag("Player"))
-        {
-            if (IsPlayerAlive() && Time.time - lastContactDamageTime >= contactDamageCooldown)
-            {
-                lastContactDamageTime = Time.time;
-
-                HeroMove heroMovement = other.GetComponent<HeroMove>();
-                if (heroMovement != null)
-                {
-                    heroMovement.TakeHit(damage, transform.position.x);
-                    Debug.Log($"Скелет нанёс урон (триггер): {damage}");
-                }
-            }
-        }
-    }
-
     protected virtual IEnumerator PerformAttack()
     {
         isAttacking = true;
@@ -420,7 +379,7 @@ public class MeleeEnemy : MonoBehaviour
         return patrolDirection;
     }
 
-    protected void CheckWall()
+    protected virtual void CheckWall()
     {
         int checkDirection = (int)patrolDirection;
 
@@ -439,7 +398,7 @@ public class MeleeEnemy : MonoBehaviour
         isTouchingWall = hit.collider != null;
     }
 
-    protected void CheckEdge()
+    protected virtual void CheckEdge()
     {
         int checkDirection = (int)patrolDirection;
 
