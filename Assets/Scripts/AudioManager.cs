@@ -10,9 +10,9 @@ public class AudioManager : MonoBehaviour
     public AudioSource sfxSource;
 
     [Header("Music Clips - Arrays")]
-    public AudioClip[] menuMusicArray;     // Массив для музыки меню
-    public AudioClip[] levelMusicArray;    // Массив для музыки уровней
-    public AudioClip[] bossMusicArray;     // Массив для музыки босса
+    public AudioClip[] menuMusicArray;
+    public AudioClip[] levelMusicArray;
+    public AudioClip[] bossMusicArray; 
 
     [Header("SFX Clips")]
     public AudioClip buttonClickSound;
@@ -54,7 +54,6 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Небольшая задержка, чтобы сцена полностью загрузилась
         Invoke("PlayMusicForCurrentScene", 0.1f);
     }
 
@@ -64,7 +63,6 @@ public class AudioManager : MonoBehaviour
         string newSceneType = "";
         AudioClip[] targetArray = null;
 
-        // Определяем тип сцены и какой массив использовать
         if (sceneName == "Menu")
         {
             newSceneType = "Menu";
@@ -73,7 +71,6 @@ public class AudioManager : MonoBehaviour
         }
         else if (sceneName == "Levels")
         {
-            // Сцена выбора уровней - используем музыку меню
             newSceneType = "Menu";
             targetArray = menuMusicArray;
             Debug.Log("Сцена Levels (выбор уровней) - загружаем музыку меню");
@@ -92,23 +89,19 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            // Если сцена не распознана, используем музыку уровней
             newSceneType = "Level";
             targetArray = levelMusicArray;
             Debug.Log($"Неизвестная сцена {sceneName} - загружаем музыку уровня");
         }
 
-        // Если тип сцены не изменился и музыка уже играет - не меняем
         if (currentSceneType == newSceneType && musicSource.isPlaying)
         {
             Debug.Log($"Тип музыки не изменился ({currentSceneType}), продолжаем играть ту же музыку");
             return;
         }
 
-        // Обновляем тип текущей сцены
         currentSceneType = newSceneType;
 
-        // Воспроизводим новую музыку
         PlayRandomMusicFromArray(targetArray);
     }
 
@@ -120,7 +113,6 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Выбираем случайный трек из массива
         int randomIndex = Random.Range(0, musicArray.Length);
         AudioClip selectedClip = musicArray[randomIndex];
 
@@ -158,7 +150,6 @@ public class AudioManager : MonoBehaviour
     {
         if (musicSource == null || clip == null) return;
 
-        // Если та же музыка уже играет - не перезапускаем
         if (musicSource.clip == clip && musicSource.isPlaying) return;
 
         musicSource.clip = clip;
@@ -176,7 +167,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Метод для принудительной смены музыки (если нужно)
     public void ForceChangeMusic(string sceneType)
     {
         currentSceneType = "";
@@ -208,7 +198,6 @@ public class AudioManager : MonoBehaviour
         Debug.Log($"Звуки: {volume * 100}%");
     }
 
-    // Метод для получения текущей громкости (для отображения)
     public float GetMusicVolume()
     {
         return musicVolume;

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-    public Button[] levelButtons; // Назначьте кнопки 1,2,3,BOSS в инспекторе
+    public Button[] levelButtons;
 
     private void Start()
     {
@@ -14,7 +14,6 @@ public class LevelManager : MonoBehaviour
 
     private void LoadLevelProgress()
     {
-        // Загружаем прогресс (по умолчанию первый уровень открыт)
         if (!PlayerPrefs.HasKey("Level1Unlocked"))
         {
             PlayerPrefs.SetInt("Level1Unlocked", 1);
@@ -27,7 +26,6 @@ public class LevelManager : MonoBehaviour
 
     private void UpdateButtonsState()
     {
-        // Обновляем состояние кнопок
         levelButtons[0].interactable = PlayerPrefs.GetInt("Level1Unlocked") == 1;
         levelButtons[1].interactable = PlayerPrefs.GetInt("Level2Unlocked") == 1;
         levelButtons[2].interactable = PlayerPrefs.GetInt("Level3Unlocked") == 1;

@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelComplete : MonoBehaviour
 {
-    public int currentLevelNumber; // 1, 2, 3 или 4 для босса
+    public int currentLevelNumber;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,7 +15,6 @@ public class LevelComplete : MonoBehaviour
 
     private void UnlockNextLevel()
     {
-        // Открываем следующий уровень
         switch (currentLevelNumber)
         {
             case 1:
@@ -39,6 +38,11 @@ public class LevelComplete : MonoBehaviour
     }
 
     public void BackToLevels()
+    {
+        SceneManager.LoadScene("Levels");
+    }
+
+    public void BackToLevelsButton()
     {
         PlayButtonSound();
         SceneManager.LoadScene("Levels");

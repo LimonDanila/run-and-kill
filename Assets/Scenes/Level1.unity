@@ -348,7 +348,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1175193593}
         m_TargetAssemblyTypeName: LevelComplete, Assembly-CSharp
-        m_MethodName: BackToLevels
+        m_MethodName: BackToLevelsButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
