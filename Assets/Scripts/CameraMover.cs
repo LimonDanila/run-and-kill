@@ -55,8 +55,8 @@ public class CameraMover : MonoBehaviour
         transform.Translate(Vector3.right * currentSpeed * Time.deltaTime);
 
         // Отладка (опционально)
-        if (Time.frameCount % 120 == 0)
-            Debug.Log($"CameraMover: скорость = {currentSpeed:F2}, таймер = {gameTimer:F1}");
+        //if (Time.frameCount % 120 == 0)
+        //    Debug.Log($"CameraMover: скорость = {currentSpeed:F2}, таймер = {gameTimer:F1}");
     }
 
     public void StartMoving()

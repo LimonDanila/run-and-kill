@@ -34,8 +34,8 @@ public class Hitbox : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        // Отладочный вывод
-        //Debug.Log($"Hitbox {gameObject.name} коснулся {other.name}");
+
+       Debug.Log($"Hitbox {gameObject.name} коснулся {other.name}");
 
         if (Time.time - lastDamageTime < damageCooldown) return;
 

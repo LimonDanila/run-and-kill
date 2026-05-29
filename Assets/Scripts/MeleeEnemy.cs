@@ -246,7 +246,7 @@ public class MeleeEnemy : MonoBehaviour
         return Vector2.Distance(transform.position, player.position) <= detectionRange;
     }
 
-    public void TakeDamage(int damage, float attackerX)
+    public virtual void TakeDamage(int damage, float attackerX)
     {
         if (isDead) return;
 
@@ -293,7 +293,7 @@ public class MeleeEnemy : MonoBehaviour
         canAttack = true;
     }
 
-    protected void Die()
+    protected virtual void Die()
     {
         if (isDead) return;
 
@@ -342,7 +342,7 @@ public class MeleeEnemy : MonoBehaviour
         get { return isDead; }
     }
 
-    protected float GetMovementDirection()
+    protected virtual float GetMovementDirection()
     {
         // Если герой жив и видим - идём к нему
         if (IsPlayerAlive() && IsPlayerDetected())
@@ -447,7 +447,7 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    protected void UpdateAnimations()
+    protected virtual void UpdateAnimations()
     {
         if (anim == null) return;
 
