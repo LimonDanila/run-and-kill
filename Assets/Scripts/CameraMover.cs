@@ -84,11 +84,17 @@ public class CameraMover : MonoBehaviour
 
     public void SetSpeed(float speed)
     {
-        initialMoveSpeed = speed;
-        if (isMoving && speed > currentSpeed)
+        // Если камера движется, плавно изменяем скорость
+        if (isMoving)
         {
             currentSpeed = speed;
+            initialMoveSpeed = speed;
         }
+        else
+        {
+            initialMoveSpeed = speed;
+        }
+        Debug.Log($"CameraMover: скорость установлена на {speed}");
     }
 
     public float GetCurrentSpeed()

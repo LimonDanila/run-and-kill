@@ -50,7 +50,7 @@ public class Hitbox : MonoBehaviour
                     if (hero != null && !hero.IsInvincible && !hero.IsDead)
                     {
                         lastDamageTime = Time.time;
-                        hero.TakeHit(damage, hitEnemy.transform.position.x);
+                        hero.TakeHit(hitEnemy.damage, hitEnemy.transform.position.x);
                         Debug.Log($"Игрок получил урон от {hitEnemy.name}!");
                     }
                 }

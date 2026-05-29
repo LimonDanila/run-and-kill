@@ -1591,7 +1591,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1766572020500880446, guid: e53e5f56c7f35f64691760f473858868, type: 3}
+  m_Sprite: {fileID: 6143989909416012877, guid: 49e3aa2d0e2404c43b7b77fbda2e24b5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2130,7 +2130,7 @@ MonoBehaviour:
   chunkWidth: 18
   chunksToPreload: 2
   chunksToKeep: 2
-  difficultyMultiplier: 1
+  difficultyMultiplier: 2
   cameraTransform: {fileID: 519420032}
   playerTransform: {fileID: 346820972}
   spawnOffsetX: 0
@@ -2138,6 +2138,7 @@ MonoBehaviour:
   portalPrefab: {fileID: 7685788941514169382, guid: c8d66b96d7fcc1c41bd58b9a6b3b93e1, type: 3}
   spawnAfterChunks: 9
   portalYOffset: 0
+  currentLevelNumber: 3
   stopDistanceFromCamera: 4
   slowDownDuration: 2
 --- !u!4 &1944735374

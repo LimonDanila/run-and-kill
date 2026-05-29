@@ -165,6 +165,12 @@ public class MeleeEnemy : MonoBehaviour
         UpdateSpriteDirection();
     }
 
+    public int CurrentHealth
+    {
+        get { return currentHealth; }
+        set { currentHealth = value; }
+    }
+
     protected virtual IEnumerator PerformAttack()
     {
         isAttacking = true;
