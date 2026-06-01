@@ -300,6 +300,12 @@ public class MeleeEnemy : MonoBehaviour
         isDead = true;
         canAttack = false;
 
+        if (CoinManager.Instance != null)
+        {
+            CoinManager.Instance.AddCoins(1);
+            Debug.Log("Скелет убит! +1 монета");
+        }
+
         // Меняем слой на "EnemyDead" (труп не взаимодействует с игроком)
         int deadLayer = LayerMask.NameToLayer("EnemyDead");
         if (deadLayer != -1)

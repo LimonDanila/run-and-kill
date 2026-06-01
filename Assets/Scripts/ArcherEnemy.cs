@@ -335,4 +335,47 @@ public class ArcherEnemy : MeleeEnemy
             Gizmos.DrawRay(rayOrigin, new Vector2(direction, 0) * distance);
         }
     }
+
+    protected override void Die()
+    {
+        if (isDead) return;
+
+        isDead = true;
+        canAttack = false;
+
+        if (CoinManager.Instance != null)
+        {
+            CoinManager.Instance.AddCoins(2);
+            Debug.Log("Лучник убит! +2 монеты");
+        }
+
+        // Меняем слой на "EnemyDead" (труп не взаимодействует с игроком)
+        int deadLayer = LayerMask.NameToLayer("EnemyDead");
+        if (deadLayer != -1)
+        {
+            gameObject.layer = deadLayer;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = deadLayer;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Слой 'EnemyDead' не найден! Создайте его в Project Settings → Tags and Layers");
+        }
+
+        rb.linearVelocity = Vector2.zero;
+        rb.gravityScale = 1f;
+
+        anim.SetTrigger("Death");
+        anim.SetBool("isDead", true);
+
+        // Отключаем скрипт
+        this.enabled = false;
+
+        // Удаляем объект через несколько секунд
+        Destroy(gameObject, 5f);
+
+        Debug.Log("Лучник погиб!");
+    }
 }
