@@ -27,6 +27,7 @@ public class HeroCombat : MonoBehaviour
         anim = GetComponent<Animator>();
         movement = GetComponent<HeroMove>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+        ApplyShopUpgrades();
     }
 
     void Update()
@@ -167,5 +168,25 @@ public class HeroCombat : MonoBehaviour
             direction = sprite.flipX ? -1f : 1f;
         Vector2 attackOrigin = new Vector2(transform.position.x + direction * attackRange, transform.position.y);
         Gizmos.DrawWireSphere(attackOrigin, attackRange);
+    }
+
+    public void ApplyShopUpgrades()
+    {
+        // Загружаем уровень улучшений
+        int damageLevel = PlayerPrefs.GetInt("DamageLevel", 0);
+
+        // Базовый урон
+        int baseLightDamage = 10;
+        int baseHeavyDamage = 25;
+
+        // Применяем улучшения урона (каждое улучшение +5 к легкой атаке, +10 к тяжелой)
+        if (damageLevel > 0)
+        {
+            int additionalDamage = damageLevel * 5;
+            lightAttackDamage = baseLightDamage + additionalDamage;
+            heavyAttackDamage = baseHeavyDamage + (additionalDamage * 2);
+
+            Debug.Log($"Применено улучшение урона: +{additionalDamage} к легкой атаке, +{additionalDamage * 2} к тяжелой");
+        }
     }
 }

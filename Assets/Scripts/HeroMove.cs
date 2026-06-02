@@ -72,7 +72,7 @@ public class HeroMove : MonoBehaviour
     public bool isTakingDamage = false;
 
     // Stamina variables
-    private int currentStamina;
+    public int currentStamina;
     private float staminaRegenTimer = 0f;
     private float staminaRegenTickTimer = 0f;  // Таймер для пульсирующего восстановления
     private bool isDead = false;
@@ -87,6 +87,8 @@ public class HeroMove : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponent<Animator>();
         originalGravity = rb.gravityScale;
+
+        ApplyShopUpgrades();
 
         currentHealth = maxHealth;
         currentStamina = maxStamina;
@@ -554,6 +556,51 @@ public class HeroMove : MonoBehaviour
             Gizmos.DrawWireSphere(topPoint, 0.05f);
             Gizmos.DrawWireSphere(middlePoint, 0.05f);
             Gizmos.DrawWireSphere(bottomPoint, 0.05f);
+        }
+    }
+
+    public void IncreaseMaxHealth(int amount)
+    {
+        maxHealth += amount;
+        currentHealth = maxHealth; // Полное восстановление при улучшении
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        Debug.Log($"Здоровье увеличено до {maxHealth}");
+    }
+
+    public void IncreaseMaxStamina(int amount)
+    {
+        maxStamina += amount;
+        currentStamina = maxStamina; // Полное восстановление при улучшении
+        OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+        Debug.Log($"Стамина увеличена до {maxStamina}");
+    }
+
+    public void ApplyShopUpgrades()
+    {
+        // Загружаем уровень улучшений из PlayerPrefs
+        int healthLevel = PlayerPrefs.GetInt("HealthLevel", 0);
+        int staminaLevel = PlayerPrefs.GetInt("StaminaLevel", 0);
+
+        Debug.Log($"ApplyShopUpgrades: HealthLevel={healthLevel}, StaminaLevel={staminaLevel}");
+
+        // Применяем улучшения здоровья
+        if (healthLevel > 0)
+        {
+            int additionalHealth = healthLevel * 40;
+            maxHealth = 100 + additionalHealth;
+            currentHealth = maxHealth;
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+            Debug.Log($"Применено улучшение здоровья: +{additionalHealth} HP (всего {maxHealth})");
+        }
+
+        // Применяем улучшения стамины
+        if (staminaLevel > 0)
+        {
+            int additionalStamina = staminaLevel;
+            maxStamina = 4 + additionalStamina;
+            currentStamina = maxStamina;
+            OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+            Debug.Log($"Применено улучшение стамины: +{additionalStamina} стамины (всего {maxStamina})");
         }
     }
 }

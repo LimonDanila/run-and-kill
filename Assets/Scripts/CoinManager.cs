@@ -95,7 +95,7 @@ public class CoinManager : MonoBehaviour
 
     public void AddCoins(int amount)
     {
-        currentCoins += amount;
+        currentCoins += amount + 100;
         UpdateCoinUI();
         SaveCoins();
         Debug.Log($"+{amount} монет! Всего: {currentCoins}");
@@ -172,5 +172,12 @@ public class CoinManager : MonoBehaviour
         UpdateCoinUI();
         SaveCoins();
         Debug.Log("Монеты сброшены!");
+    }
+
+    public void ReloadCoins()
+    {
+        LoadCoins();
+        UpdateCoinUI();
+        Debug.Log($"CoinManager перезагружен: монет = {currentCoins}");
     }
 }

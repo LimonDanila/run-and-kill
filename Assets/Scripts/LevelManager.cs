@@ -24,8 +24,15 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void UpdateButtonsState()
+    public void UpdateButtonsState()
     {
+        // Проверяем, что массив кнопок не пустой и имеет нужное количество элементов
+        if (levelButtons == null || levelButtons.Length < 4)
+        {
+            Debug.LogWarning("LevelButtons массив не полностью назначен!");
+            return;
+        }
+
         levelButtons[0].interactable = PlayerPrefs.GetInt("Level1Unlocked") == 1;
         levelButtons[1].interactable = PlayerPrefs.GetInt("Level2Unlocked") == 1;
         levelButtons[2].interactable = PlayerPrefs.GetInt("Level3Unlocked") == 1;
@@ -53,7 +60,7 @@ public class LevelManager : MonoBehaviour
                 break;
             case 4:
                 if (PlayerPrefs.GetInt("LevelBossUnlocked") == 1)
-                    levelName = "LevelBoss";
+                    levelName = "Boss";
                 break;
         }
 
@@ -84,6 +91,20 @@ public class LevelManager : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlayButtonClick();
+        }
+    }
+
+    private void UnlockAllLevelsForTest()
+    {
+        // Проверяем, включен ли тестовый режим
+        if (Debug.isDebugBuild)
+        {
+            PlayerPrefs.SetInt("Level1Unlocked", 1);
+            PlayerPrefs.SetInt("Level2Unlocked", 1);
+            PlayerPrefs.SetInt("Level3Unlocked", 1);
+            PlayerPrefs.SetInt("LevelBossUnlocked", 1);
+            PlayerPrefs.Save();
+            Debug.Log("Тестовый режим: все уровни разблокированы!");
         }
     }
 }
